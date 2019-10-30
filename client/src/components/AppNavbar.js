@@ -1,4 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import RegisterModal from "./auth/RegisterModal";
+import LoginModal from "./auth/LoginModal";
+import { logout } from "../actions/authActions";
+import { connect } from "react-redux";
 import {
 	Collapse,
 	Navbar,
@@ -18,6 +22,11 @@ class AppNavbar extends Component {
 		}
 	}
 
+	onLogoutClick = e => {
+		e.preventDefault();
+		this.props.logout();
+	}
+
 	toggle = () => {
 		this.setState ({
 			isOpen: !this.state.isOpen
@@ -33,7 +42,16 @@ class AppNavbar extends Component {
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="ml-auto" navbar>
-							<NavItem><NavLink href = "https://github.com/Mastagoon/">Github</NavLink></NavItem>
+							{
+								!this.props.isAuthenticated ? 
+								<Fragment>
+									<NavItem><RegisterModal /></NavItem>
+									<NavItem><LoginModal /></NavItem>
+								</Fragment>
+								 :
+								<NavItem><NavLink href = "#" onClick={this.onLogoutClick}>Logout</NavLink></NavItem>
+							}
+							
 						</Nav>
 					</Collapse>
 				</Container>
@@ -43,4 +61,8 @@ class AppNavbar extends Component {
 	}
 }
 
-export default AppNavbar;
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { logout })(AppNavbar);

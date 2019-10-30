@@ -3,10 +3,15 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from "react-redux";
 import { getItems, deleteItem } from "../actions/itemActions";
-//import propTypes from "prop-types";
+import propTypes from "prop-types";
 
 class ShoppingList extends Component {
 	
+	static propTypes = {
+		getItems: propTypes.func.isRequired,
+		item: propTypes.object.isRequired
+	}
+
 	componentDidMount() {
 		this.props.getItems();
 	}
@@ -41,10 +46,7 @@ class ShoppingList extends Component {
 	}
 }
 
-/*ShoppingList.propTypes = {
-	getItems: propTypes.func.isRequired,
-	item: propTypes.object.isRequired
-}*/
+
 
 const mapStateToProps = (state) => ({
 	item: state.item

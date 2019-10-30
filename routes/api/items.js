@@ -26,8 +26,8 @@ router.post("/", auth, (req,res) => {
 
 //@route	DELETE api/items
 //@desc		Delete an item
-//@access	Public
-router.delete(":id", (req,res) => {
+//@access	Private
+router.delete(":id", auth, (req,res) => {
 	Item.findById(req.params.id)
 		.then(item => item.remove().then(() => res.send("Item removed successfully.")));
 });	

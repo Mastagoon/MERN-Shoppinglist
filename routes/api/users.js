@@ -30,19 +30,16 @@ router.delete("/:id", async (req,res) => {
 //@desc		Register new user
 //@access	Public
 router.post("/", async (req, res) => {
-	const { username, email, password } = req.body;
+	const { name, email, password } = req.body;
 	//simple checks
-	if(!username || !email || !password) {
+	if(!name || !email || !password) {
 		return res.status(400).json({msg: "please fill all fields."});
 	}
 	if(await User.findOne({email})) {
 		return res.status(400).json({msg:"this email is already used!"});
 	}
-	if(await User.findOne({username})) {
-		return res.status(400).json({msg:"this username is already used."});
-	}
 	const newUser = new User({
-		username,
+		name,
 		email,
 		password
 	});
@@ -61,7 +58,7 @@ router.post("/", async (req, res) => {
 						token,
 						user: {
 							id:newUser._id,
-							name:newUser.username,
+							name:newUser.name,
 							email:newUser.email
 						}
 					});
