@@ -12,7 +12,6 @@ app.use(express.json());
 app.use("/api/items", items);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
-app.use("/api/sex", sex);
 
 mongoose.connect(process.env.DB_CONNECTION
 	,{ useNewUrlParser: true,
