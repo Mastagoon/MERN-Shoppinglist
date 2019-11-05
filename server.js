@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const items = require("./routes/api/items");
 const users = require("./routes/api/users");
 const auth = require("./routes/api/auth");
-const sex = require("./routes/api/sex");
 require("dotenv/config");
 const app = express();
 
